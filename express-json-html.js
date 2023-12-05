@@ -1,21 +1,36 @@
 const fs = require("fs");
+
 module.exports = (app)=>{
     const fs = require('fs') // this engine requires the fs module
     app.engine('json', (filePath, options, callback) => { // define the template engine
         fs.readFile(filePath, (err, content) => {
             if (err) return callback(err)
 
+            let json = JSON.parse(content.toString());
 
-            const json = JSON.parse(content.toString())
-            let rendered = toHtml(json,options);
+            interpellate(json,options);
 
+            let rendered = toHtml(json);
 
             return callback(null, rendered)
         })
     })
 }
 
-function toHtml(obj,options){
+function interpellate(json, options) {
+    for(let key in json){
+        if(typeof json[key] === "string"){
+            for(let k in options){
+                if(json[key].indexOf("{" + k +"}")!==-1)
+                    json[key] = json[key].replace("{" + k +"}",options[k]);
+            }
+        }
+        else
+            interpellate(json[key],options);
+    }
+}
+
+function toHtml(obj){
     let rend = "";
     for(let key in obj){
         if(key==="attr")
@@ -37,11 +52,6 @@ function toHtml(obj,options){
         }
 
         rend = rend + "</" + key + ">";
-    }
-
-    for(let key in options){
-        if(typeof options[key] === "string")
-            rend = rend.replace("{" + key + "}",options[key]);
     }
 
     return rend;
