@@ -15,11 +15,9 @@
         "h2": "Whats's up?",
         "h3": {
           "attr": {"style": "color:green"},
-          "loop": {
-            "cnt": 3,
-            "div": {
-              "span": "All well!"
-            }
+          "span": {
+            "loop": 3,
+            "span": "All well!"
           }
         }
       },

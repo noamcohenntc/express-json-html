@@ -19,17 +19,25 @@ module.exports = (app)=>{
 
 function interpellate(json, options) {
     for(let key in json){
-        if(json[key].loop) {
-            let cnt = json[key].loop.cnt;
-            delete json[key].loop.cnt;
+        let loop = false;
+        for(let k in json[key]) {
+            if (k === "loop"){
+                loop = true
+                break;
+            }
+        }
+
+        if(loop) {
+            let cnt = json[key].loop;
+            delete json[key].loop;
             let rr = [];
             for(let i=0;i<cnt;i++) {
-                for (let k in json[key].loop) {
-                    let obj = {[k]:json[key].loop[k]}
+                for (let k in json) {
+                    let obj = {[k]:json[k]}
                     rr.push(obj);
                 }
             }
-            json[key].loop = rr;
+            json[key] = rr;
         }
 
         if(typeof json[key] === "string"){
