@@ -15,7 +15,12 @@
         "h2": "Whats's up?",
         "h3": {
           "attr": {"style": "color:green"},
-          "span": "All well!"
+          "loop": {
+            "cnt": 3,
+            "div": {
+              "span": "All well!"
+            }
+          }
         }
       },
       "footer": {
