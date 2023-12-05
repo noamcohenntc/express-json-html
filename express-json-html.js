@@ -48,7 +48,13 @@ function toHtml(obj){
             rend = rend + obj[key];
         }
         else {
-            rend = rend + toHtml(obj[key]);
+            if(obj[key][0]){
+                obj[key].forEach((o)=>{
+                    rend = rend + toHtml(o);
+                })
+            }
+            else
+                rend = rend + toHtml(obj[key]);
         }
 
         rend = rend + "</" + key + ">";

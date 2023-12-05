@@ -20,9 +20,10 @@ http://localhost:3000/
       }
     },
     "body": {
-      "header": {
-        "h1": "Hi, {title}"
-      },
+      "header": [
+        {"h1": "Hi,"},
+        {"h1": "{title}"}
+      ],
       "main": {
         "h2": "Whats's up?",
         "h3": {
